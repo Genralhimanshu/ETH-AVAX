@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract BasicExample {
+    address public owner;
+    uint256 public value;
+
+    constructor() {
+        owner = msg.sender;
+        value = 0;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only the owner can call this function.");
+        _;
+    }
+
+    function setValue(uint256 newValue) external onlyOwner {
+        // Use require to check conditions and inputs
+        require(newValue > 0, "Value must be greater than 0");
+
+        // Update the value
+        value = newValue;
+    }
+
+    function assertExample(uint256 x) external pure returns (uint256) {
+        // Use assert to check for invariants and validate internal conditions
+        assert(x != 0);
+        return x * 2;
+    }
+
+    function revertExample() external pure {
+        // Use revert to handle exceptional conditions or revert with a custom error message
+        revert("This function always reverts");
+    }
+}
